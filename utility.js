@@ -1,7 +1,7 @@
 export const api_key = import.meta.env.VITE_API_KEY;
 
-export const getTopHeadlinesApi = (country) => {
-    return `https://newsapi.org/v2/top-headlines?country=${country}&apiKey=${api_key}`
+export const getTopHeadlinesApi = (category, country) => {
+    return `https://saurav.tech/NewsAPI/top-headlines/category/${category}/${country}.json`
 }
 
 export const formatDate = (dateStr) => {

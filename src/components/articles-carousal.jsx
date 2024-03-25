@@ -3,7 +3,7 @@ import Article from './article'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCaretLeft, faCaretRight, faSpinner } from "@fortawesome/free-solid-svg-icons";
 
-function ArticlesCarousal({ data, isLoading }) {
+function ArticlesCarousal({ data, isLoading, setCategory }) {
     const [currentItemIndex, setcurrentItemIndex] = useState(0);
     const containerRef = useRef(null);
     const [startX, setStartX] = useState(null);
@@ -140,7 +140,7 @@ function ArticlesCarousal({ data, isLoading }) {
                                         width: "100%",
                                     }}
                                 >
-                                    <Article article={article} index={index} arr={arr} isLoading={isLoading} />
+                                    <Article article={article} index={index} arr={arr} isLoading={isLoading} setCategory={setCategory} />
                                 </div>
                             )
                         })
