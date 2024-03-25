@@ -1,14 +1,16 @@
-import { useState, useRef } from 'react'
+import React, { useState, useRef, useContext, useCallback } from 'react'
 import Article from './article'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCaretLeft, faCaretRight, faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { AppContext } from '../App'
 
-function ArticlesCarousal({ data, isLoading, setCategory }) {
+const ArticlesCarousal = React.memo(({ data }) => {
     const [currentItemIndex, setcurrentItemIndex] = useState(0);
     const containerRef = useRef(null);
     const [startX, setStartX] = useState(null);
     const [swipeType, setSwipeType] = useState("");
     const [direction, setDirection] = useState(null);
+    const { isLoading } = useContext(AppContext);
 
     // carousal handlers
     const nextItemHandler = () => {
@@ -47,14 +49,17 @@ function ArticlesCarousal({ data, isLoading, setCategory }) {
     };
 
     const handleTouchMove = (e) => {
+        const swipeThreshold = 50;
+
         if (startX === null) return;
         const currentX = e.touches[0].clientX;
         const diffX = currentX - startX;
-
-        if (diffX > 0) {
-            setSwipeType("RIGHT");
-        } else if (diffX < 0) {
-            setSwipeType("LEFT");
+        if (Math.abs(diffX) >= swipeThreshold) {
+            if (diffX > 0) {
+                setSwipeType("RIGHT");
+            } else if (diffX < 0) {
+                setSwipeType("LEFT");
+            }
         }
     };
 
@@ -65,13 +70,12 @@ function ArticlesCarousal({ data, isLoading, setCategory }) {
         } else if (swipeType === "LEFT") {
             nextItemHandler();
         }
+
         setSwipeType("");
     };
 
-
-    const handleTransitionEnd = () => {
-        if (containerRef.current) {
-
+    const handleTransitionEnd = (event) => {
+        if (event.target === containerRef.current) { // checking target because in is getting invoked because of children transition element
             const firstElement = containerRef.current.firstElementChild;// getting the first element
             const lastElement = containerRef.current.lastElementChild;// getting the last element
 
@@ -133,21 +137,21 @@ function ArticlesCarousal({ data, isLoading, setCategory }) {
                         data?.map((article, index, arr) => {
                             return (
                                 <div
-                                    key={index}
+                                    key={`${article.publishedAt}${index}`}
                                     style={{
                                         flexShrink: 0,
                                         flexGrow: 0,
                                         width: "100%",
                                     }}
                                 >
-                                    <Article article={article} index={index} arr={arr} isLoading={isLoading} setCategory={setCategory} />
+                                    <Article article={article} index={index} arr={arr} />
                                 </div>
                             )
                         })
                     }
-                    {isLoading && <FontAwesomeIcon
-                        className='w-8 h-8 text-white animate-spin fixed inset-1/2'
-                        icon={faSpinner} />}
+                    {
+                        isLoading && <FontAwesomeIcon className='w-8 h-8 text-white animate-spin fixed inset-1/2' icon={faSpinner} />
+                    }
                 </div>
                 <div className="controls hidden sm:flex">
                     <FontAwesomeIcon
@@ -193,6 +197,6 @@ function ArticlesCarousal({ data, isLoading, setCategory }) {
             </div>
         </div>
     );
-}
+});
 
 export default ArticlesCarousal;
