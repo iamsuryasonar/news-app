@@ -8,11 +8,11 @@ import { AppContext } from '../App'
 
 const Article = ({ article, index, arr }) => {
     const [menu, setMenu] = useState(false);
-    const { isLoading, category, setCategory } = useContext(AppContext);
+    const { category, setCategory } = useContext(AppContext);
 
     return <div className='relative w-full h-svh bg-purple-900 text-white flex'>
         {article?.urlToImage && <img className='w-full h-full object-cover' src={article.urlToImage} alt={`Image of title ${article.title}`}></img>}
-        <div className=' absolute top-0 left-0 right-0 bg-black bg-opacity-[6%] backdrop-blur-sm flex flex-row justify-between items-center py-2 px-4'>
+        <div className=' absolute top-0 left-0 right-0 bg-black bg-opacity-[10%] backdrop-blur-sm flex flex-row justify-between items-center py-2 px-4'>
             <div className='flex flex-col gap-1'>
                 <p className='font-bold text-xl '>{article.source.name}</p>
                 <div className=' flex flex-row gap-1'>
@@ -43,7 +43,7 @@ const Article = ({ article, index, arr }) => {
         {
             <Transition in={menu} timeout={100}>
                 {(state) => (
-                    <div className={`fixed  right-5 bottom-0 left-5 rounded-xl flex justify-center items-center transition-transform transform ease-in-out duration-700 ${state === 'entered' ? 'translate-y-0 ' : 'translate-y-full '}`}>
+                    <div className={`fixed z-30 right-5 bottom-0 left-5 rounded-xl flex justify-center items-center transition-transform transform ease-in-out duration-700 ${state === 'entered' ? 'translate-y-0 ' : 'translate-y-full '}`}>
                         <div className='bg-white max-w-xl w-full min-h-[400px] rounded-t-lg px-6 py-8 flex flex-col gap-4'>
                             <div className='flex flex-row justify-between items-center'>
                                 <p className='text-cyan-800 text-2xl font-sans font-thin'>Select category</p>

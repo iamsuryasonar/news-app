@@ -150,7 +150,7 @@ const ArticlesCarousal = React.memo(({ data }) => {
                         })
                     }
                     {
-                        isLoading && <FontAwesomeIcon className='w-8 h-8 text-white animate-spin fixed inset-1/2' icon={faSpinner} />
+                        isLoading && <FontAwesomeIcon className='w-12 h-12 text-white animate-spin fixed inset-1/2' icon={faSpinner} />
                     }
                 </div>
                 <div className="controls hidden sm:flex">
