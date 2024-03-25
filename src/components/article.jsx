@@ -1,9 +1,9 @@
 import { formatDate } from '../../utility'
 import reloadIcon from '../assets/reload.svg'
-import ellipsisIcon from '../assets/ellipsis.svg'
+
 
 function Article({ article, index, arr }) {
-    return <div className='relative w-full h-svh bg-purple-900 text-white'>
+    return <div className='relative w-full h-svh bg-purple-900 text-white flex'>
         {article?.urlToImage && <img className='w-full h-full object-cover' src={article.urlToImage} alt={`Image of title ${article.title}`}></img>}
         <div className=' absolute top-0 left-0 right-0 bg-black bg-opacity-[6%] backdrop-blur-sm flex flex-row justify-between items-center py-2 px-4'>
             <div className='flex flex-col gap-1'>

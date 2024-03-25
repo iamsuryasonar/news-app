@@ -1,9 +1,9 @@
 import { useState, useRef } from 'react'
 import Article from './article'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCaretLeft, faCaretRight } from "@fortawesome/free-solid-svg-icons";
+import { faCaretLeft, faCaretRight, faSpinner } from "@fortawesome/free-solid-svg-icons";
 
-function ArticlesCarousal({ data }) {
+function ArticlesCarousal({ data, isLoading }) {
     const [currentItemIndex, setcurrentItemIndex] = useState(0);
     const containerRef = useRef(null);
     const [startX, setStartX] = useState(null);
@@ -140,11 +140,14 @@ function ArticlesCarousal({ data }) {
                                         width: "100%",
                                     }}
                                 >
-                                    <Article article={article} index={index} arr={arr} />
+                                    <Article article={article} index={index} arr={arr} isLoading={isLoading} />
                                 </div>
                             )
                         })
                     }
+                    {isLoading && <FontAwesomeIcon
+                        className='w-8 h-8 text-white animate-spin fixed inset-1/2'
+                        icon={faSpinner} />}
                 </div>
                 <div className="controls hidden sm:flex">
                     <FontAwesomeIcon
